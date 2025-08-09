@@ -18,9 +18,9 @@ sources_preferidas:
   - "infomoney.com.br"
   - "oglobo.globo.com"
 email:
-  enabled: false
-  from: "seu_email@gmail.com"
-  to: ["voce@empresa.com"]
+  enabled: true
+  from: "andrewskt@gmail.com"
+  to: ["andrewskt@gmail.com"]
   subject_prefix: "[Clipping Crédito]"
 telegram:
   enabled: false
