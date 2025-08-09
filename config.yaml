@@ -1,0 +1,29 @@
+timezone: "America/Sao_Paulo"
+lookback_hours: 30
+queries:
+  - 'debêntures OR "debenture incentivada" OR "lei 12.431"'
+  - 'CRA OR "certificado de recebíveis do agronegócio"'
+  - 'CRI OR "certificado de recebíveis imobiliários"'
+  - 'FIDC OR securitização OR "direitos creditórios"'
+  - '"mercado de capitais" OR DCM OR "oferta pública"'
+  - '"letra financeira" OR LF'
+  - '"CVM 175" OR "ICVM 160" OR "ICVM 158"'
+  - 'ANBIMA debêntures'
+sources_preferidas:
+  - "valor.globo.com"
+  - "exame.com"
+  - "braziljournal.com"
+  - "neofeed.com.br"
+  - "pipelinevalor.globo.com"
+  - "infomoney.com.br"
+  - "oglobo.globo.com"
+email:
+  enabled: false
+  from: "seu_email@gmail.com"
+  to: ["voce@empresa.com"]
+  subject_prefix: "[Clipping Crédito]"
+telegram:
+  enabled: false
+  bot_token: ""
+  chat_id: ""
+output_dir: "output"
