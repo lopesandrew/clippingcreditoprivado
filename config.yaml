@@ -56,8 +56,8 @@ sources_preferidas:
 email:
   enabled: true
   provider: "outlook"  # gmail, outlook, hotmail
-  from: "andrewskt@gmail.com"
-  to: ["andrewskt@gmail.com"]
+  from: "andrewlopes_oliveira@hotmail.com"
+  to: ["alopes@bcpsecurities.com"]
   subject_prefix: "[Clipping Crédito]"
 telegram:
   enabled: false
