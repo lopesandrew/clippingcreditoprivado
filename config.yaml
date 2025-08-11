@@ -55,6 +55,7 @@ sources_preferidas:
   - "sindusconsp.com.br"
 email:
   enabled: true
+  provider: "outlook"  # gmail, outlook, hotmail
   from: "andrewskt@gmail.com"
   to: ["andrewskt@gmail.com"]
   subject_prefix: "[Clipping Crédito]"
