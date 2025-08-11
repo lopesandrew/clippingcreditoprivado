@@ -78,11 +78,18 @@ def prioritize(df, prefer_list):
 
 def send_email(cfg, subject, body_text, body_html=None):
     """Envia email via SMTP (Gmail, Outlook, etc.)"""
+    print("=== DEBUG EMAIL ===")
+    print(f"Email enabled: {cfg.get('email', {}).get('enabled', False)}")
+    
     if not cfg.get("email", {}).get("enabled", False):
+        print("Email não está habilitado na configuração")
         return
     
     email_cfg = cfg["email"]
     provider = email_cfg.get("provider", "gmail").lower()
+    print(f"Provider: {provider}")
+    print(f"From: {email_cfg.get('from')}")
+    print(f"To: {email_cfg.get('to')}")
     
     # Configurações SMTP por provedor
     smtp_configs = {
@@ -96,13 +103,16 @@ def send_email(cfg, subject, body_text, body_html=None):
         return
     
     smtp_config = smtp_configs[provider]
+    print(f"SMTP Config: {smtp_config}")
     
     try:
+        print("Configurando mensagem...")
         # Configurar mensagem
         msg = MIMEMultipart("alternative")
         msg["From"] = email_cfg["from"]
         msg["To"] = ", ".join(email_cfg["to"])
         msg["Subject"] = subject
+        print(f"Subject: {subject}")
         
         # Adicionar corpo em texto
         msg.attach(MIMEText(body_text, "plain", "utf-8"))
@@ -111,8 +121,10 @@ def send_email(cfg, subject, body_text, body_html=None):
         if body_html:
             msg.attach(MIMEText(body_html, "html", "utf-8"))
         
+        print("Conectando ao servidor SMTP...")
         # Conectar e enviar
         with smtplib.SMTP(smtp_config["server"], smtp_config["port"]) as server:
+            print("Iniciando TLS...")
             server.starttls()
             
             # Obter senha do ambiente
@@ -123,17 +135,22 @@ def send_email(cfg, subject, body_text, body_html=None):
                     return
             else:  # outlook/hotmail
                 password = os.getenv("OUTLOOK_APP_PASSWORD")
+                print(f"Password found: {'Yes' if password else 'No'}")
                 if not password:
                     print("OUTLOOK_APP_PASSWORD não configurado")
                     return
             
+            print("Fazendo login...")
             server.login(email_cfg["from"], password)
+            print("Enviando mensagem...")
             server.send_message(msg)
             
         print(f"Email enviado com sucesso via {provider.title()}")
         
     except Exception as e:
         print(f"Erro ao enviar email: {e}")
+        import traceback
+        traceback.print_exc()
 
 def send_telegram(cfg, message):
     """Envia mensagem via Telegram"""
