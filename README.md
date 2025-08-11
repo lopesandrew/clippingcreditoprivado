@@ -12,7 +12,7 @@ Script que coleta notícias via Google News RSS sobre crédito privado e mercado
 
 ## Rodar local
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 python scraper.py
 ```
 
