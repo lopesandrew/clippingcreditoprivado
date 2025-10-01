@@ -18,8 +18,27 @@ queries:
   - '"CVM 400" OR "CVM 476" OR "oferta restrita"'
   - 'ANBIMA OR "código ANBIMA" OR "agente fiduciário"'
   - '"rating de crédito" OR Fitch OR Moodys OR "S&P"'
-  - 'underwriting OR coordenador OR bookbuilding'
+  - '(underwriting OR coordenador OR bookbuilding) AND (debêntures OR bonds OR ações OR "oferta pública" OR emissão)'
   - '"mercado primário" OR "mercado secundário" bonds'
+
+  # Mercado Internacional
+  - '"mercado internacional" bonds OR dívida'
+  - 'eurobonds OR "bonds internacionais" OR "dívida externa"'
+  - '"treasury bonds" OR "corporate bonds" internacional'
+  - '"high yield" OR "investment grade" internacional'
+  - '"spreads de crédito" OR "credit spreads" internacional'
+  - '"fed" OR "federal reserve" taxa juros'
+  - '"banco central europeu" OR BCE taxa'
+
+  # Macroeconomia
+  - 'inflação OR IPCA OR IGP-M economia'
+  - 'PIB OR "produto interno bruto" crescimento'
+  - '"taxa Selic" OR "taxa de juros" Copom'
+  - 'câmbio OR dólar OR "taxa de câmbio" economia'
+  - 'déficit OR superávit fiscal OR "resultado primário"'
+  - 'balança comercial OR exportação OR importação'
+  - 'desemprego OR "mercado de trabalho" OR emprego economia'
+  - 'IBC-Br OR "atividade econômica" OR "indicadores econômicos"'
 
   # Regulação e Supervisão
   - '"CVM 175" OR "ICVM 160" OR "ICVM 158" OR "CVM 88"'
@@ -54,6 +73,7 @@ queries:
   - '"fundo de investimento" OR "gestor de recursos" debêntures'
   - '"investidor institucional" OR "investidor qualificado"'
   - 'tesouraria OR "gestão de caixa" OR liquidez empresas'
+filter_only_preferred_sources: false  # true = apenas fontes preferidas, false = todas mas priorizando as preferidas
 sources_preferidas:
   - "valor.globo.com"
   - "exame.com"
