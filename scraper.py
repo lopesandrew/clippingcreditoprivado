@@ -65,6 +65,24 @@ def fetch_items(queries, tzinfo):
             })
     return items
 
+def filter_blacklist(df, blacklist):
+    """Remove notícias que contêm palavras da blacklist no título"""
+    if not blacklist:
+        return df
+
+    # Criar padrão regex para buscar qualquer palavra da blacklist (case insensitive)
+    pattern = '|'.join([r'\b' + re.escape(word) + r'\b' for word in blacklist])
+
+    # Filtrar linhas onde o título NÃO contém palavras da blacklist
+    mask = ~df['title'].str.contains(pattern, case=False, na=False, regex=True)
+    filtered_df = df[mask].copy()
+
+    removed_count = len(df) - len(filtered_df)
+    if removed_count > 0:
+        print(f"Removidas {removed_count} notícias pela blacklist")
+
+    return filtered_df
+
 def prioritize(df, prefer_list):
     if not prefer_list:
         return df
@@ -204,6 +222,13 @@ def main():
 
     if df.empty:
         print("Sem novidades nas últimas horas.")
+        return
+
+    # Aplicar filtro de blacklist
+    df = filter_blacklist(df, cfg.get("blacklist", []))
+
+    if df.empty:
+        print("Sem novidades após aplicar filtros.")
         return
 
     df = prioritize(df, cfg.get("sources_preferidas", []))

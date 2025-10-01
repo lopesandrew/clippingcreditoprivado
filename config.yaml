@@ -1,14 +1,59 @@
 timezone: "America/Sao_Paulo"
 lookback_hours: 30
 queries:
+  # Instrumentos de Crédito Privado
   - 'debêntures OR "debenture incentivada" OR "lei 12.431"'
   - 'CRA OR "certificado de recebíveis do agronegócio"'
   - 'CRI OR "certificado de recebíveis imobiliários"'
-  - 'FIDC OR securitização OR "direitos creditórios"'
-  - '"mercado de capitais" OR DCM OR "oferta pública"'
-  - '"letra financeira" OR LF'
-  - '"CVM 175" OR "ICVM 160" OR "ICVM 158"'
-  - 'ANBIMA debêntures'
+  - 'FIDC OR "fundo de investimento em direitos creditórios"'
+  - 'securitização OR "direitos creditórios" OR cessão crédito'
+  - '"letra financeira" OR LF OR LCA OR LCI'
+  - '"nota comercial" OR "commercial paper"'
+  - '"cédula de crédito bancário" OR CCB'
+  - 'CDCA OR "cédula de produto rural" OR CPR'
+
+  # Mercado de Capitais
+  - '"mercado de capitais" OR DCM OR "debt capital markets"'
+  - '"oferta pública" OR IPO OR follow-on OR "emissão primária"'
+  - '"CVM 400" OR "CVM 476" OR "oferta restrita"'
+  - 'ANBIMA OR "código ANBIMA" OR "agente fiduciário"'
+  - '"rating de crédito" OR Fitch OR Moodys OR "S&P"'
+  - 'underwriting OR coordenador OR bookbuilding'
+  - '"mercado primário" OR "mercado secundário" bonds'
+
+  # Regulação e Supervisão
+  - '"CVM 175" OR "ICVM 160" OR "ICVM 158" OR "CVM 88"'
+  - 'CVM regulação OR "Comissão de Valores Mobiliários"'
+  - '"Banco Central" crédito OR "resolução CMN" OR "circular BACEN"'
+  - '"Conselho Monetário Nacional" OR CMN resolução'
+  - 'Basileia OR "acordo de capital" OR "índice de Basileia"'
+
+  # Infraestrutura e Concessões
+  - 'concessão OR "leilão de concessão" OR PPP OR "parceria público-privada"'
+  - '"project finance" OR "financiamento de projetos"'
+  - 'BNDES OR "banco de desenvolvimento" financiamento'
+  - '"debênture de infraestrutura" OR "lei 12.431"'
+  - 'rodovia OR ferrovia OR aeroporto OR porto concessão'
+  - 'saneamento OR energia OR telecomunicações concessão'
+
+  # Empresas e Emissores
+  - '"emissão de debêntures" OR "programa de debêntures"'
+  - 'reestruturação dívida OR refinanciamento OR amortização'
+  - '"disclosure" OR "fato relevante" CVM'
+  - 'default OR inadimplência OR "covenant breach"'
+  - '"assembléia de debenturistas" OR AGD'
+  - 'rebaixamento rating OR upgrade rating'
+
+  # Setores Estratégicos
+  - '"agronegócio" financiamento OR crédito rural'
+  - '"setor elétrico" OR "energia renovável" financiamento'
+  - '"real estate" OR "incorporação imobiliária" CRI'
+  - 'petróleo OR "óleo e gás" financiamento'
+
+  # Fundos e Investidores
+  - '"fundo de investimento" OR "gestor de recursos" debêntures'
+  - '"investidor institucional" OR "investidor qualificado"'
+  - 'tesouraria OR "gestão de caixa" OR liquidez empresas'
 sources_preferidas:
   - "valor.globo.com"
   - "exame.com"
@@ -16,14 +61,8 @@ sources_preferidas:
   - "neofeed.com.br"
   - "pipelinevalor.globo.com"
   - "infomoney.com.br"
-  - "oglobo.globo.com"
-  - "folha.uol.com.br"
   - "estadao.com.br"
-  - "globorural.globo.com"
-  - "agribiz.com.br"
-  - "canalrural.com.br"
-  - "agrolink.com.br"
-  - "noticiasagricolas.com.br"
+  - "folha.uol.com.br"
   - "reuters.com"
   - "bloomberg.com"
   - "moneytimes.com.br"
@@ -31,12 +70,16 @@ sources_preferidas:
   - "capitalaberto.com.br"
   - "istoedinheiro.com.br"
   - "epocanegocios.globo.com"
-  - "canalenergia.com.br"
   - "dci.com.br"
   - "jornaldocomercio.com"
+  - "cvm.gov.br"
+  - "anbima.com.br"
+  - "b3.com.br"
+  - "bcb.gov.br"
+  - "gov.br/economia"
+  - "canalenergia.com.br"
   - "portalenergia.com.br"
   - "energiahoje.com"
-  - "petronoticias.com.br"
   - "aneel.gov.br"
   - "ons.org.br"
   - "portalsaneamento.com.br"
@@ -47,18 +90,50 @@ sources_preferidas:
   - "abcr.org.br"
   - "portogente.com.br"
   - "mundologistica.com.br"
-  - "ferroviario.com.br"
   - "aeroportosbrasil.com.br"
   - "infrasa.com.br"
-  - "mobilize.org.br"
   - "cbic.org.br"
   - "sindusconsp.com.br"
+  - "globorural.globo.com"
+  - "agribiz.com.br"
+  - "canalrural.com.br"
+  - "noticiasagricolas.com.br"
 email:
   enabled: true
-  provider: "outlook"  # gmail, outlook, hotmail
-  from: "andrewlopes_oliveira@hotmail.com"
+  provider: "gmail"  # gmail, outlook, hotmail
+  from: "andrewskt@gmail.com"
   to: ["alopes@bcpsecurities.com"]
-  subject_prefix: "[Clipping Crédito]"
+  subject_prefix: "[Clipping Crédito Privado]"
+blacklist:
+  - "acidente"
+  - "acidentes"
+  - "atropelamento"
+  - "colisão"
+  - "colisao"
+  - "batida"
+  - "capotamento"
+  - "engavetamento"
+  - "morte"
+  - "mortes"
+  - "feridos"
+  - "vítima"
+  - "vitima"
+  - "assalto"
+  - "roubo"
+  - "furto"
+  - "prisão"
+  - "prisao"
+  - "tráfico"
+  - "trafico"
+  - "droga"
+  - "polícia"
+  - "policia"
+  - "crime"
+  - "incêndio"
+  - "incendio"
+  - "fogo"
+  - "explosão"
+  - "explosao"
 telegram:
   enabled: false
   bot_token: ""
