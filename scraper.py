@@ -26,7 +26,7 @@ def dedup_key(title, link):
     return hashlib.md5(base.encode("utf-8")).hexdigest()
 
 def calculate_similarity(text1, text2):
-    """Calcula similaridade entre dois textos usando Jaccard similarity"""
+    """Calcula similaridade entre dois textos usando Jaccard similarity ponderada"""
     if not text1 or not text2:
         return 0.0
 
@@ -35,9 +35,16 @@ def calculate_similarity(text1, text2):
     text1 = text1.lower().translate(str.maketrans('', '', string.punctuation))
     text2 = text2.lower().translate(str.maketrans('', '', string.punctuation))
 
-    # Criar conjuntos de palavras
-    words1 = set(text1.split())
-    words2 = set(text2.split())
+    # Palavras irrelevantes (stopwords)
+    stopwords = {
+        'o', 'a', 'os', 'as', 'de', 'da', 'do', 'das', 'dos', 'em', 'no', 'na',
+        'nos', 'nas', 'para', 'com', 'por', 'um', 'uma', 'e', 'ou', 'que', 'se',
+        'ao', 'aos', 'à', 'às', 'pelo', 'pela', 'pelos', 'pelas', 'é', 'são'
+    }
+
+    # Criar conjuntos de palavras, removendo stopwords
+    words1 = set(w for w in text1.split() if w not in stopwords and len(w) > 2)
+    words2 = set(w for w in text2.split() if w not in stopwords and len(w) > 2)
 
     # Calcular Jaccard similarity
     intersection = words1.intersection(words2)
@@ -48,13 +55,19 @@ def calculate_similarity(text1, text2):
 
     return len(intersection) / len(union)
 
-def remove_similar_news(df, similarity_threshold=0.7):
-    """Remove notícias muito similares, mantendo apenas a primeira ocorrência"""
+def remove_similar_news(df, similarity_threshold=0.5):
+    """Remove notícias muito similares, mantendo apenas a primeira ocorrência (ordenada por prioridade/data)"""
     if df.empty:
         return df
 
     to_remove = set()
     titles = df['title'].tolist()
+    total_comparisons = len(titles) * (len(titles) - 1) // 2
+
+    print(f"Analisando similaridade entre {len(titles)} notícias ({total_comparisons} comparações)...")
+
+    comparisons_done = 0
+    last_progress = 0
 
     for i in range(len(titles)):
         if i in to_remove:
@@ -62,8 +75,16 @@ def remove_similar_news(df, similarity_threshold=0.7):
         for j in range(i + 1, len(titles)):
             if j in to_remove:
                 continue
+
+            comparisons_done += 1
+            progress = (comparisons_done * 100) // total_comparisons
+            if progress >= last_progress + 10:
+                print(f"  Progresso: {progress}%")
+                last_progress = progress
+
             similarity = calculate_similarity(titles[i], titles[j])
             if similarity >= similarity_threshold:
+                # Remove a notícia j (mantém a primeira/mais prioritária)
                 to_remove.add(j)
 
     if to_remove:
@@ -567,7 +588,8 @@ def main():
         return
 
     # Remover notícias similares/duplicadas
-    df = remove_similar_news(df, similarity_threshold=0.7)
+    similarity_threshold = cfg.get("similarity_threshold", 0.5)
+    df = remove_similar_news(df, similarity_threshold=similarity_threshold)
 
     if df.empty:
         print("Sem novidades após remover duplicatas.")

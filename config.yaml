@@ -1,5 +1,6 @@
 timezone: "America/Sao_Paulo"
 lookback_hours: 30
+similarity_threshold: 0.4  # 0.0-1.0: quanto maior, mais restritivo (0.4 = 40% de palavras em comum)
 queries:
   # Instrumentos de Crédito Privado
   - 'debêntures OR "debenture incentivada" OR "lei 12.431"'
