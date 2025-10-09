@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git push:*)",
+      "Bash(\"C:\\Users\\Andrew Lopes\\AppData\\Local\\Programs\\Python\\Python313\\python.exe\" \"c:/Users/Andrew Lopes/OneDrive - BCP Securities/Área de Trabalho/Clipping_Noticias/clippingcreditoprivado-1/scraper.py\")",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
