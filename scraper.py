@@ -564,7 +564,7 @@ def main():
         return
 
     df = pd.DataFrame(raw)
-    df["published_at"] = pd.to_datetime(df["published_at"])
+    df["published_at"] = pd.to_datetime(df["published_at"], utc=True)
     df = df[df["published_at"] >= since_dt].copy()
     df["dedup"] = df.apply(lambda r: dedup_key(r["title"], r["link"]), axis=1)
     df = df.drop_duplicates(subset=["dedup"]).drop(columns=["dedup"])
